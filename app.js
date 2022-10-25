@@ -6,6 +6,7 @@ const {userModel, userComplet} = require("./model/userModel");
 const {platComplet} = require("./model/platModel");
 const {CommandeMereModel, CommandeMereComplet, validerPanier} = require("./model/commandeMere");
 const { RestoModel } = require("./model/restoModel");
+const path = require('path');
 
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
@@ -14,6 +15,10 @@ app.use(cors({
 }));
 const {SMTPClient}   = require('emailjs');
 
+
+app.get('/', cors(), async(req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 app.get('/api/utilisateurs', cors(), async(req, res) => {
     try {
@@ -212,6 +217,6 @@ app.post('/api/sendMail', cors(), async(req, res) => {
     }
 });
 
-app.listen(3001, ()=>{
+app.listen(process.env.PORT || 3001, () => {
     console.log("Listenning on port 3001...");
 });
